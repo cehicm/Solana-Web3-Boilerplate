@@ -1,26 +1,36 @@
 import React from 'react';
-import { useWallet, } from '@solana/wallet-adapter-react';
-import { WalletModalProvider, WalletDisconnectButton, WalletMultiButton, } from '@solana/wallet-adapter-react-ui';
-import Transactions from "./components/Transactions";
+import { useWallet } from '@solana/wallet-adapter-react';
+import {
+  WalletModalProvider,
+  WalletDisconnectButton,
+  WalletMultiButton,
+} from '@solana/wallet-adapter-react-ui';
+import Transactions from './components/Transactions';
 
 const MyWallet = () => {
-    let walletAddress = "";
-    const wallet = useWallet();
-    if (wallet.connected && wallet.publicKey) {
-        walletAddress = wallet.publicKey.toString();
-    }
-    return (<>
-        {wallet.connected &&
-            <p>Your wallet is {walletAddress}</p>}
+  let walletAddress = '';
+  const wallet = useWallet();
+  if (wallet.connected && wallet.publicKey) {
+    walletAddress = wallet.publicKey.toString();
+  }
+  return (
+    <>
+      {wallet.connected && <p>Your wallet is {walletAddress}</p>}
 
-        <div className="multi-wrapper">
-            <span className="button-wrapper">
-                <WalletModalProvider>
-                    <WalletMultiButton />
-                </WalletModalProvider>
-            </span>
-            {wallet.connected && <><Transactions walletAddress={walletAddress} /><WalletDisconnectButton /></>}
-        </div>
-    </>);
+      <div className="multi-wrapper">
+        <span className="button-wrapper">
+          <WalletModalProvider>
+            <WalletMultiButton />
+          </WalletModalProvider>
+        </span>
+        {wallet.connected && (
+          <>
+            <Transactions walletAddress={walletAddress} />
+            <WalletDisconnectButton />
+          </>
+        )}
+      </div>
+    </>
+  );
 };
 export default MyWallet;
