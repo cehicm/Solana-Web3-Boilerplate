@@ -6,13 +6,17 @@ import {
   WalletMultiButton,
 } from '@solana/wallet-adapter-react-ui';
 import Transactions from './components/Transactions';
+import Account from './components/Account';
 
 const MyWallet = () => {
   let walletAddress = '';
+  
   const wallet = useWallet();
+  
   if (wallet.connected && wallet.publicKey) {
     walletAddress = wallet.publicKey.toString();
   }
+
   return (
     <>
       {wallet.connected && <p>Your wallet is {walletAddress}</p>}
@@ -25,8 +29,10 @@ const MyWallet = () => {
         </span>
         {wallet.connected && (
           <>
-            <Transactions walletAddress={walletAddress} />
-            <WalletDisconnectButton />
+            <div><Transactions walletAddress={walletAddress} /></div>
+            <div><Account /></div>
+
+            <div><WalletDisconnectButton /></div>
           </>
         )}
       </div>
